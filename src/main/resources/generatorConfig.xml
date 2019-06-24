@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <classPathEntry location="/Users/linfeiyang/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar"/>
+
+    <context id="context" targetRuntime="MyBatis3">
+
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+        <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="autoDelimitKeywords" value="true"/>
+
+        <!--使生成的Model实现Serializable接口-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <commentGenerator>
+            <!-- This property is used to specify whether MBG will include any coments in the generated code -->
+            <property name="suppressAllComments" value="false"/>
+            <!-- This property is used to specify whether MBG will include the generation timestamp in the generated comments -->
+            <property name="suppressDate" value="true"/>
+            <!--model类加上数据库字段的注释-->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!--这个是数据库的连接url和用户名密码-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/cyjy?characterEncoding=UTF-8"
+                        userId="root" password="123456"/>
+        <javaTypeResolver>
+            <!-- This property is used to specify whether MyBatis Generator should force the use of java.math.BigDecimal
+      for DECIMAL and NUMERIC fields, rather than substituting integral types when possible -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--只需要修改 targetPackage java model定义的包名儿 -->
+        <javaModelGenerator targetPackage="com.linfeiyang.shop.mybatis.model" targetProject="src/main/java">
+            <!--<javaModelGenerator targetPackage="com.longdai.common.bean.model" targetProject="src/main/java">-->
+            <!-- This property is used to select whether MyBatis Generator will generate different Java packages for
+      the objects based on the catalog and schema of the introspected table -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- This property is used to select whether MyBatis Generator adds code to trim the white space from character fields returned from the database -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--只需要修改 targetPackage java sqlMap定义的包名儿 -->
+        <sqlMapGenerator targetPackage="com.linfeiyang.shop.mybatis.mapper.xml" targetProject="src/main/java">
+            <!-- This property is used to select whether MyBatis Generator will generate different Java packages for
+      the objects based on the catalog and schema of the introspected table -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--只需要修改 targetPackage 这个就是那个interface 包名儿  -->
+        <!-- type字段是 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+               type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+               type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+               type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+       -->
+        <javaClientGenerator targetPackage="com.linfeiyang.shop.mybatis.mapper" targetProject="src/main/java"
+                             type="MIXEDMAPPER">
+            <!-- This property is used to select whether MyBatis Generator will generate different Java packages for
+      the objects based on the catalog and schema of the introspected table -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!--具体的表 domainObjectName 是你自己定义的文件名-->
+
+        <table tableName="t_admin"
+               domainObjectName="Admin"
+               enableCountByExample="false"
+               enableDeleteByPrimaryKey="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               modelType="flat">
+            <property name="useActualColumnNames" value="true"/>
+            <property name="useCompoundPropertyNames" value="true"/>
+        </table>
+    </context>
+</generatorConfiguration>
