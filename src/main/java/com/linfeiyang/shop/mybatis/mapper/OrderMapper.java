@@ -1,10 +1,9 @@
 package com.linfeiyang.shop.mybatis.mapper;
 
 import com.linfeiyang.shop.mybatis.model.Order;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 public interface OrderMapper {
     /**
@@ -74,4 +73,7 @@ public interface OrderMapper {
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Order record);
+
+    @Select("select * from t_order order by id desc limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}")
+    List<Order> selectOrders(@Param("start") Integer start, @Param("size") Integer size);
 }

@@ -19,6 +19,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -33,6 +34,26 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        BufferedReader br = null;
+        try {
+            br = request.getReader();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String str = null;
+        StringBuilder wholeStr = new StringBuilder();
+        while(true){
+            try {
+                if ((str = br.readLine()) == null) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            wholeStr.append(str);
+        }
+        System.out.println(wholeStr);
+        Admin admin = GsonUtils.toObject(wholeStr.toString(), Admin.class);
+        this.setUsernameParameter(admin.getUsername());
+        this.setPasswordParameter(admin.getPassword());
         return super.attemptAuthentication(request, response);
     }
 
@@ -75,11 +96,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     protected String obtainPassword(HttpServletRequest request) {
-        return request.getParameter(super.getPasswordParameter());
+        return this.getPasswordParameter();
     }
 
     @Override
     protected String obtainUsername(HttpServletRequest request) {
-        return request.getParameter(super.getUsernameParameter());
+        return this.getUsernameParameter();
     }
 }

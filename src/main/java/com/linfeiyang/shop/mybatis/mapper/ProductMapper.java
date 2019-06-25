@@ -1,10 +1,9 @@
 package com.linfeiyang.shop.mybatis.mapper;
 
 import com.linfeiyang.shop.mybatis.model.Product;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 public interface ProductMapper {
     /**
@@ -107,4 +106,11 @@ public interface ProductMapper {
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Product record);
+
+
+    @Select("select * from t_product order by id desc limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}")
+    List<Product> selectProduct(@Param("start") Integer start, @Param("size") Integer size);
+
+    @Select("delete from t_product where id=#{id,jdbcType=INTEGER}")
+    int deleteByPrimaryKey(Integer id);
 }

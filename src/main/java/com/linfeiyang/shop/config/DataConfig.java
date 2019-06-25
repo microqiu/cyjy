@@ -27,10 +27,10 @@ public class DataConfig {
     @Bean
     public DataSource dataSource() throws SQLException {
         DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl("jdbc:mysql://127.0.0.1:3306/cyjy?characterEncoding=UTF-8");
+        datasource.setUrl("jdbc:mysql://172.16.0.36:3308/cyjy?characterEncoding=UTF-8");
         datasource.setDriverClassName(com.mysql.jdbc.Driver.class.getName());
         datasource.setUsername("root");
-        datasource.setPassword("123456");
+        datasource.setPassword("111111");
         //物理连接数
         datasource.setInitialSize(3);
         //最小连接数

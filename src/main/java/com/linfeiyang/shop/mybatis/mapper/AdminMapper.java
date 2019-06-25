@@ -1,10 +1,9 @@
 package com.linfeiyang.shop.mybatis.mapper;
 
 import com.linfeiyang.shop.mybatis.model.Admin;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 public interface AdminMapper {
     /**
@@ -77,4 +76,10 @@ public interface AdminMapper {
 
     @Select("select * from t_admin where username=#{username,jdbcType=VARCHAR}")
     Admin selectByUserName(String username);
+
+    @Select("select * from t_admin order by id desc limit #{start,jdbcType=INTEGER},#{size,jdbcType=INTEGER}")
+    List<Admin> selectUsers(@Param("start") Integer start, @Param("size") Integer size);
+
+    @Select("delete from t_admin where id=#{id,jdbcType=INTEGER}")
+    int deleteByPrimaryKey(Integer id);
 }

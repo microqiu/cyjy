@@ -33,11 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and().addFilter(customAuthenticationFilter)
                 .authorizeRequests()
-                .antMatchers("/test", "/login").permitAll() //2
+                .antMatchers("/login").permitAll() //2
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/#/password/login") //注1
+                .loginPage("/user/login") //注1
                 .permitAll();
         http.csrf().disable();
         http.logout().logoutUrl("/logout").logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());

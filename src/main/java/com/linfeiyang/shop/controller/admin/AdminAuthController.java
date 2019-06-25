@@ -1,11 +1,1 @@
-package com.linfeiyang.shop.controller.admin;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
-
-@Slf4j
-@RestController
-public class AdminAuthController {
-
-
-}
+package com.linfeiyang.shop.controller.admin;import com.linfeiyang.shop.annotation.AdminController;import com.linfeiyang.shop.bean.ResultBean;import com.linfeiyang.shop.common.GsonUtils;import com.linfeiyang.shop.mybatis.mapper.AdminMapper;import com.linfeiyang.shop.mybatis.model.Admin;import com.linfeiyang.shop.service.admin.AdminAuthService;import lombok.extern.slf4j.Slf4j;import org.springframework.web.bind.annotation.*;import javax.annotation.Resource;@Slf4j@AdminControllerpublic class AdminAuthController extends BaseController{    @Resource    private AdminAuthService adminAuthService;    @Resource    private AdminMapper adminMapper;    @PostMapping("/users/add")    public ResultBean<Boolean> addAdmin(@RequestBody Admin admin) {        log.info("添加用户,username={}", admin.getUsername());        if (adminAuthService.addAdmin(admin)) {            log.info("添加用户,username={},成功", admin.getUsername());            return ResultBean.ok(true);        } else {            log.info("添加用户,username={},失败", admin.getUsername());            return ResultBean.error("操作失败");        }    }    @DeleteMapping("/users/{id}")    public ResultBean<Boolean> addAdmin(@PathVariable Integer id) {        log.info("删除用户,id={}", id);        if (adminMapper.deleteByPrimaryKey(id) > 0) {            log.info("删除用户,id={},成功", id);            return ResultBean.ok(true);        } else {            log.info("删除用户,id={},失败", id);            return ResultBean.error("操作失败");        }    }    @PutMapping("/users/{id}")    public ResultBean<Boolean> addAdmin(@PathVariable Integer id,                                        @RequestBody Admin admin) {        log.info("更新用户,{},{}", id, GsonUtils.toJson(admin));        if (adminMapper.updateByPrimaryKeySelective(admin) > 0) {            log.info("更新用户,{},成功", GsonUtils.toJson(admin));            return ResultBean.ok(true);        } else {            log.info("更新用户,{},失败", GsonUtils.toJson(admin));            return ResultBean.error("操作失败");        }    }    @GetMapping("/users/current")    public ResultBean<Admin> currentAdmin() {        int adminId = getUserId();        Admin currentAdmin = adminMapper.selectByPrimaryKey(adminId);        return ResultBean.ok(currentAdmin);    }}

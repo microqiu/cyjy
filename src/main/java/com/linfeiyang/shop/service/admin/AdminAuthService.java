@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 @Slf4j
 @Service
@@ -40,7 +41,7 @@ public class AdminAuthService {
         if (!passwordEncoder.validate(password, admin.getPassword())) {
             throw new BadCredentialsException("密码不正确!");
         }
-        return new UsernamePasswordAuthenticationToken(userName, admin.getId());
+        return new UsernamePasswordAuthenticationToken(userName, admin.getId(), new ArrayList<>());
     }
 
     public Admin validateCurrentUser() {

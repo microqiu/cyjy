@@ -20,7 +20,7 @@ public class FeiyangShopApplicationTests {
 	@Test
 	public void testAddAdmin() {
 		Admin admin = new Admin();
-		admin.setUsername("xiaoqiu");
+		admin.setUsername("admin");
 		admin.setPassword("123456");
 		admin.setPhone("13733987253");
 		Assert.isTrue(adminAuthService.addAdmin(admin), "添加失败!");
